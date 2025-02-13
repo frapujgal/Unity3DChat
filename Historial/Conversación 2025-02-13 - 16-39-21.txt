@@ -1,3 +1,0 @@
-Cliente1 se ha conectado al chat.
-<Cliente1>: hola wapa
-<Cliente1>: adios

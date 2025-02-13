@@ -1,1 +1,0 @@
-<color=#FF5733>Cliente1 se ha unido al chat.</color>

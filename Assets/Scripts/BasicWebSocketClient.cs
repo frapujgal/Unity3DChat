@@ -15,11 +15,18 @@ public class BasicWebSocketClient : MonoBehaviour
     public TMP_InputField inputField;
     private Queue<Action> _actionsToRun;
 
+    private AudioSource audioSource;
+    public AudioClip msgNotification;
+    public AudioClip popNotification;
+
+    public TMP_Text muteTextButton;
+
     public ScrollRect scrollRect;
 
     // Se ejecuta al iniciar la escena
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         _actionsToRun = new Queue<Action>();
 
         // Crear una instancia del WebSocket apuntando a la URI del servidor
@@ -69,6 +76,7 @@ public class BasicWebSocketClient : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SendMessageToServer(inputField.text);
+            audioSource.PlayOneShot(popNotification);
 
             // Limpiamos el input field y le devolvemos el foco, para no tener que seleccionarlo cada vez
             inputField.text = "";
@@ -85,6 +93,7 @@ public class BasicWebSocketClient : MonoBehaviour
             }
 
             action?.Invoke();
+            audioSource.PlayOneShot(msgNotification);
 
             // Forzar actualización del Layout para el Scroll
             LayoutRebuilder.ForceRebuildLayoutImmediate(chatDisplay.rectTransform);
@@ -94,9 +103,33 @@ public class BasicWebSocketClient : MonoBehaviour
         }
     }
 
+    public void OnSendButtonClick()
+    {
+        SendMessageToServer(inputField.text);
+
+        // Limpiamos el input field y le devolvemos el foco, para no tener que seleccionarlo cada vez
+        inputField.text = "";
+        inputField.ActivateInputField();
+    }
+
+    public void OnMuteButtonClick()
+    {
+        if (audioSource.mute)
+        {
+            audioSource.mute = false;
+            muteTextButton.text = "Mute";
+        }
+        else
+        {
+            audioSource.mute = true;
+            muteTextButton.text = "Unmute";
+        }
+    }
+
     // Método para enviar un mensaje al servidor (puedes llamarlo, por ejemplo, desde un botón en la UI)
     public void SendMessageToServer(string message)
     {
+        print("entro");
         if (ws != null && ws.ReadyState == WebSocketState.Open)
         {
             if (string.IsNullOrEmpty(message))
