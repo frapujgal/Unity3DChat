@@ -93,7 +93,7 @@ public class ChatBehavior : WebSocketBehavior
         clients[ID] = clientColor;
 
         chatHistory += $">>> {clientID} se ha conectado al chat.\n";
-        Sessions.Broadcast($"<color={clientColor}>{clientID} se ha conectado al chat.</color>");
+        Sessions.Broadcast($"<color={clientColor}>>>> {clientID} se ha conectado al chat.</color>");
     }
 
     // Se invoca cuando se recibe un mensaje desde un cliente.
@@ -108,6 +108,6 @@ public class ChatBehavior : WebSocketBehavior
     {
         clients.Remove(ID);
         chatHistory += $"<<< {clientID} se ha desconectado del chat.\n";
-        Sessions.Broadcast($"<color={clientColor}>{clientID} se ha desconectado del chat.</color>");
+        Sessions.Broadcast($"<color={clientColor}><<< {clientID} se ha desconectado del chat.</color>");
     }
 }

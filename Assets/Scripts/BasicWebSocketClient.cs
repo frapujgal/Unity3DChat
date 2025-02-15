@@ -69,7 +69,6 @@ public class BasicWebSocketClient : MonoBehaviour
     {
         if (ws == null || ws.ReadyState != WebSocketState.Open)
         {
-            // Si el WebSocket no está conectado, no hacer nada
             return;
         }
 

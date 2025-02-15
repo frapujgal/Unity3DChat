@@ -1,0 +1,5 @@
+>>> Cliente1 se ha conectado al chat.
+<Cliente1> holaaa
+<Cliente1> que pasa
+<Cliente1> adios
+<<< Cliente1 se ha desconectado del chat.
